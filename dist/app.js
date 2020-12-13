@@ -27,9 +27,9 @@ const app = express_1.default();
  */
 
 // Config port
-const listener = app.listen(8888, function () {
-    console.log('Listening on port ' + listener.address().port); //Listening on port 8888
-});
+// const listener = app.listen(8888, function () {
+//     console.log('Listening on port ' + listener.address().port); //Listening on port 8888
+// });
 
 app.use(morgan_1.default('dev'));
 app.use(express_1.default.json());
