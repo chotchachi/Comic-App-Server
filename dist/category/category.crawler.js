@@ -10,7 +10,7 @@ const category_descriptions_1 = __importDefault(require("./category_descriptions
 class Crawler {
     constructor() { this.ref = firebase_admin_1.default.database().ref('comic_app'); }
     async allCategories() {
-        const body = await util_1.GET('https://ww2.mangafox.online/');
+        const body = await util_1.GET('https://ww4.mangafox.online/');
         const categories = this.getCategories(body);
         const images = await this.fetchImagesIfNeeded(categories.map(c => c.link));
         return categories.map((c) => {

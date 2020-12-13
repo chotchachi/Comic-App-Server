@@ -1,6 +1,6 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+const __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : {"default": mod};
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const util_1 = require("./util");
@@ -9,6 +9,8 @@ const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const cookieParser = require('cookie-parser');
 const morgan_1 = __importDefault(require("morgan"));
+const mongo_db = require('mongodb')
+
 /**
  * Import routes
  */
@@ -20,18 +22,21 @@ const category_1 = __importDefault(require("./category"));
 const category_detail_1 = __importDefault(require("./category_detail"));
 const app = express_1.default();
 
+/**
+ * Basic setup
+ */
+
+// Config port
 const listener = app.listen(8888, function () {
     console.log('Listening on port ' + listener.address().port); //Listening on port 8888
 });
 
-/**
- * Basic setup
- */
 app.use(morgan_1.default('dev'));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
+
 /**
  * Use routes
  */
@@ -41,6 +46,7 @@ app.use('/chapter_detail', chapter_detail_1.default);
 app.use('/search_comic', search_comic_1.default);
 app.use('/category', category_1.default);
 app.use('/category_detail', category_detail_1.default);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next(createError(404));
@@ -61,4 +67,3 @@ const errorHandler = (err, req, res, next) => {
 };
 app.use(errorHandler);
 exports.default = app;
-//# sourceMappingURL=app.js.map
