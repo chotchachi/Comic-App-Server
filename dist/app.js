@@ -9,7 +9,10 @@ const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const cookieParser = require('cookie-parser');
 const morgan_1 = __importDefault(require("morgan"));
-const mongo_db = require('mongodb')
+const db = require('./db/index');
+
+// Connect to MongoDB
+db.connect();
 
 /**
  * Import routes
