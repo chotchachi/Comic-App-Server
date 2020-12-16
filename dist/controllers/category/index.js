@@ -10,4 +10,5 @@ const controller = new category_controller_1.Controller(crawler);
 
 const router = express_1.Router();
 router.get('/', controller.getAllCategories);
+router.get('/crawler_to_database', controller.saveDatabase)
 exports.default = router;

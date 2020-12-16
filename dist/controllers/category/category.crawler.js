@@ -15,6 +15,10 @@ class Crawler {
     constructor() { }
 
     async allCategories() {
+        return await categoryService.allCategories()
+    }
+
+    async saveCategories() {
         const body = await util.GET('https://ww4.mangafox.online/');
         const categories = this.getCategories(body);
         const images = await this.fetchImagesIfNeeded(categories.map(c => c.link));

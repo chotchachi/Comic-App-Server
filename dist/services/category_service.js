@@ -1,6 +1,17 @@
 const categoryModel = require('../models/category')
 
 class CategoryService {
+    async allCategories() {
+        return await categoryModel.find()
+            .exec()
+            .then((categories) => {
+                return categories;
+            })
+            .catch((error) => {
+                throw new Error(error.message);
+            });
+    }
+
     async addCategories(categories) {
         categories.forEach( (item) => {
             try {
@@ -20,6 +31,7 @@ class CategoryService {
             console.log(err, ">>>")
         }
     }
+
 
 }
 
