@@ -15,7 +15,7 @@ const db = require('./db/index');
 /**
  * Import routes
  */
-const index = __importDefault(require("./index"));
+const index = __importDefault(require("./controllers/index"));
 const detail = __importDefault(require("./controllers/detail"));
 const chapter_detail = __importDefault(require("./controllers/chapter_detail"));
 const search_comic = __importDefault(require("./controllers/search_comic"));

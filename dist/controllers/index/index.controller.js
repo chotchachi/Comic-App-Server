@@ -1,17 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_crawler_1 = require("./index.crawler");
-const util_1 = require("../util");
+const index_crawler = require("./index.crawler");
+const util = require("../../util");
+
 class Controller {
     constructor() {
         this.newestComics = async (req, res) => {
             try {
                 const page = parseInt(req.query.page) || 1;
-                const comics = await index_crawler_1.Crawler.newestComics(page);
+                const comics = await index_crawler.Crawler.newestComics(page);
                 res.status(200).json(comics);
             }
             catch (e) {
-                util_1.log(e);
+                util.log(e);
                 const error = {
                     message: 'Internal server error',
                     status_code: 500
@@ -19,14 +20,15 @@ class Controller {
                 res.status(500).json(error);
             }
         };
+
         this.updatedComics = async (req, res) => {
             try {
                 const page = parseInt(req.query.page) || 1;
-                const comics = await index_crawler_1.Crawler.updatedComics(page);
+                const comics = await index_crawler.Crawler.updatedComics(page);
                 res.status(200).json(comics);
             }
             catch (e) {
-                util_1.log(e);
+                util.log(e);
                 const error = {
                     message: 'Internal server error',
                     status_code: 500
@@ -34,14 +36,15 @@ class Controller {
                 res.status(500).json(error);
             }
         };
+
         this.mostViewedComics = async (req, res) => {
             try {
                 const page = parseInt(req.query.page) || 1;
-                const comics = await index_crawler_1.Crawler.mostViewedComics(page);
+                const comics = await index_crawler.Crawler.mostViewedComics(page);
                 res.status(200).json(comics);
             }
             catch (e) {
-                util_1.log(e);
+                util.log(e);
                 const error = {
                     message: 'Internal server error',
                     status_code: 500,
@@ -51,5 +54,5 @@ class Controller {
         };
     }
 }
+
 exports.Controller = Controller;
-//# sourceMappingURL=index.controller.js.map
