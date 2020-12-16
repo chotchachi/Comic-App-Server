@@ -14,5 +14,6 @@ router.get('/', (_req, res) => res.status(200).send("<h1>Thanh Quang's Comic App
 router.get('/newest_comics', controller.newestComics);
 router.get('/updated_comics', controller.updatedComics);
 router.get('/most_viewed_comics', controller.mostViewedComics);
+router.get('/crawler_comics', controller.crawlerComics);
 
 exports.default = router;

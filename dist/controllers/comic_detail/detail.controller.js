@@ -13,7 +13,7 @@ class Controller {
                     return res
                         .status(422)
                         .json({
-                        message: "Require 'comic link' to get comic detail",
+                        message: "Require 'comic link' to get comic comic_detail",
                         status_code: 542200
                     });
                 }
@@ -21,7 +21,7 @@ class Controller {
                     return res
                         .status(422)
                         .json({
-                        message: "Invalid 'comic link' to get comic detail",
+                        message: "Invalid 'comic link' to get comic comic_detail",
                         status_code: 422
                     });
                 }
@@ -40,4 +40,4 @@ class Controller {
     }
 }
 exports.Controller = Controller;
-//# sourceMappingURL=detail.controller.js.map
+//# sourceMappingURL=comic_detail.controller.js.map

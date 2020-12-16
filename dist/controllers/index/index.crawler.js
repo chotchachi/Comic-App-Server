@@ -15,6 +15,10 @@ class Crawler {
         const body = await util.GET(`https://ww4.mangafox.online/topmanga/page/${page}`);
         return util.bodyToComicList(body);
     }
+    static async getComicLink(page) {
+        const body = await util.GET(`https://ww4.mangafox.online/page/${page}`);
+        return util.getComicLink(body);
+    }
 }
 
 exports.Crawler = Crawler;

@@ -52,6 +52,22 @@ class Controller {
                 res.status(500).json(error);
             }
         };
+
+        this.crawlerComics = async (req, res) => {
+            try {
+                const page = parseInt(req.query.page) || 1;
+                const comics = await index_crawler.Crawler.getComicLink(page);
+                res.status(200).json(comics);
+            }
+            catch (e) {
+                util.log(e);
+                const error = {
+                    message: 'Internal server error',
+                    status_code: 500
+                };
+                res.status(500).json(error);
+            }
+        };
     }
 }
 

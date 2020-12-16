@@ -73,4 +73,4 @@ class Crawler {
     }
 }
 exports.Crawler = Crawler;
-//# sourceMappingURL=detail.crawler.js.map
+//# sourceMappingURL=comic_detail.crawler.js.map
