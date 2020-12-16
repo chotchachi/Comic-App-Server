@@ -10,9 +10,9 @@ async function connect() {
             useCreateIndex: true
         });
 
-        console.log('connect successfully!!!');
+        console.log('Connect database successfully!!!');
     } catch (error) {
-        console.log(`fail = ${error}`);
+        console.log(`Connect database failed with error: ${error}`);
     }
 }
 
