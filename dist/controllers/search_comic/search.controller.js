@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const search_crawler_1 = require("./search.crawler");
-const util_1 = require("../util");
+const util_1 = require("../../util");
 class Controller {
     constructor() {
         this.searchComic = async (req, res, _next) => {

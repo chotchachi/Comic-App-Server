@@ -1,13 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const category_detail_crawler_1 = require("./category_detail.crawler");
-const util_1 = require("../../util");
+
+const category_detail_crawler = require("./category_detail.crawler");
+const util = require("../../util");
+
 class Controller {
     constructor() {
         this.getCategoryDetail = async (req, res) => {
             try {
                 const { link } = req.query;
-                util_1.log({ link });
+                util.log({ link });
                 // check link is valid?
                 if (!link) {
                     return res
@@ -17,7 +19,7 @@ class Controller {
                         status_code: 422
                     });
                 }
-                if (typeof link !== 'string' || !util_1.isValidURL(link)) {
+                if (typeof link !== 'string' || !util.isValidURL(link)) {
                     return res
                         .status(422)
                         .json({
@@ -26,11 +28,10 @@ class Controller {
                     });
                 }
                 const page = parseInt(req.query.page) || 1;
-                const comics = await category_detail_crawler_1.Crawler.getComics(link, page);
+                const comics = await category_detail_crawler.Crawler.getComics(link, page);
                 res.status(200).json(comics);
-            }
-            catch (e) {
-                util_1.log(e);
+            } catch (e) {
+                util.log(e);
                 const error = {
                     message: 'Internal server error',
                     status_code: 500
@@ -38,10 +39,11 @@ class Controller {
                 res.status(500).json(error);
             }
         };
+
         this.getPopulars = async (req, res) => {
             try {
                 const { link } = req.query;
-                util_1.log({ link });
+                util.log({ link });
                 // check link is valid?
                 if (!link) {
                     return res
@@ -51,7 +53,7 @@ class Controller {
                         status_code: 422
                     });
                 }
-                if (typeof link !== 'string' || !util_1.isValidURL(link)) {
+                if (typeof link !== 'string' || !util.isValidURL(link)) {
                     return res
                         .status(422)
                         .json({
@@ -59,11 +61,11 @@ class Controller {
                         status_code: 422
                     });
                 }
-                const comics = await category_detail_crawler_1.Crawler.getPopularComics(link);
+                const comics = await category_detail_crawler.Crawler.getPopularComics(link);
                 res.status(200).json(comics);
             }
             catch (e) {
-                util_1.log(e);
+                util.log(e);
                 const error = {
                     message: 'Internal server error',
                     status_code: 500
@@ -73,5 +75,5 @@ class Controller {
         };
     }
 }
+
 exports.Controller = Controller;
-//# sourceMappingURL=category_detail.controller.js.map

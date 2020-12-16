@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const util_1 = require("../util");
+const util_1 = require("../../util");
 class Crawler {
     static async searchComic(query, page) {
         const body = await util_1.GET(`https://ww2.mangafox.online/search/${query}/page/${page}`);
