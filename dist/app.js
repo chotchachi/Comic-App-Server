@@ -18,21 +18,21 @@ db.connect();
  * Import routes
  */
 const index_1 = __importDefault(require("./index"));
-const detail_1 = __importDefault(require("./detail"));
-const chapter_detail_1 = __importDefault(require("./chapter_detail"));
+const detail_1 = __importDefault(require("./controllers/detail"));
+const chapter_detail_1 = __importDefault(require("./controllers/chapter_detail"));
 const search_comic_1 = __importDefault(require("./search_comic"));
-const category_1 = __importDefault(require("./category"));
-const category_detail_1 = __importDefault(require("./category_detail"));
+const category_1 = __importDefault(require("./controllers/category"));
+const category_detail_1 = __importDefault(require("./controllers/category_detail"));
 const app = express_1.default();
 
 /**
  * Basic setup
  */
 
-// Config port
-// const listener = app.listen(8888, function () {
-//     console.log('Listening on port ' + listener.address().port); //Listening on port 8888
-// });
+//Config port
+const listener = app.listen(8888, function () {
+    console.log('Listening on port ' + listener.address().port); //Listening on port 8888
+});
 
 app.use(morgan_1.default('dev'));
 app.use(express_1.default.json());

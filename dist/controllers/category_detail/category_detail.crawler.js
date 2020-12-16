@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const util_1 = require("../util");
+const util_1 = require("../../util");
 const cheerio_1 = __importDefault(require("cheerio"));
 class Crawler {
     static async getComics(categoryLink, page) {

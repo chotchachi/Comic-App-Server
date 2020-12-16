@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const category_detail_crawler_1 = require("./category_detail.crawler");
-const util_1 = require("../util");
+const util_1 = require("../../util");
 class Controller {
     constructor() {
         this.getCategoryDetail = async (req, res) => {

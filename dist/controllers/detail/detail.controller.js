@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const util_1 = require("../util");
+const util_1 = require("../../util");
 class Controller {
     constructor(crawler) {
         this.crawler = crawler;
-        this.getChapterDetail = async (req, res) => {
+        this.getComicDetail = async (req, res) => {
             try {
                 const { link } = req.query;
                 util_1.log({ link });
@@ -13,20 +13,20 @@ class Controller {
                     return res
                         .status(422)
                         .json({
-                        message: "Require 'chapter link' to get chapter detail",
-                        status_code: 422
+                        message: "Require 'comic link' to get comic detail",
+                        status_code: 542200
                     });
                 }
                 if (typeof link !== 'string' || !util_1.isValidURL(link)) {
                     return res
                         .status(422)
                         .json({
-                        message: "Invalid 'chapter link' to get chapter detail",
+                        message: "Invalid 'comic link' to get comic detail",
                         status_code: 422
                     });
                 }
-                const chapter = await this.crawler.chapterDetail(link);
-                res.status(200).json(chapter);
+                const comic = await this.crawler.comicDetail(link);
+                res.status(200).json(comic);
             }
             catch (e) {
                 util_1.log(e);
@@ -40,4 +40,4 @@ class Controller {
     }
 }
 exports.Controller = Controller;
-//# sourceMappingURL=chapter.controller.js.map
+//# sourceMappingURL=detail.controller.js.map
