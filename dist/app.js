@@ -11,6 +11,7 @@ const path = __importDefault(require("path"));
 const cookieParser = require('cookie-parser');
 const morgan = __importDefault(require("morgan"));
 const db = require('./db/index');
+const crawler = require('./crawler/crawler')
 
 /**
  * Import routes
@@ -34,6 +35,9 @@ db.connect();
 const listener = app.listen(8888, function () {
     console.log('Listening on port ' + listener.address().port);
 });
+
+// Crawl comics
+//crawler.crawlComics()
 
 app.use(morgan.default('dev'));
 app.use(express.default.json());
