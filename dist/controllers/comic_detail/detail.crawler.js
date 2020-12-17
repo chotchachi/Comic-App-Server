@@ -1,14 +1,19 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+const __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : {"default": mod};
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const cheerio_1 = __importDefault(require("cheerio"));
-const util_1 = require("../../util");
+
+const cheerio = __importDefault(require("cheerio"));
+const util = require("../../util");
+const chapter_crawler = require("../chapter_detail/chapter.crawler");
+
+const crawler = new chapter_crawler.Crawler();
+
 class Crawler {
     async comicDetail(link) {
-        const body = await util_1.GET(link);
-        const $ = cheerio_1.default.load(body);
+        const body = await util.GET(link);
+        const $ = cheerio.default.load(body);
         const content_left = $('div.content_left');
         const manga_info = content_left.find('div.manga_info');
         const thumbnail = manga_info.find('div.manga_info_left > div.manga_info_img > img').attr('src');
@@ -46,7 +51,7 @@ class Crawler {
             }
         });
         const shortened_content = content_left.find('div.manga_description > div.manga_des_content > p').text().trim();
-        const chapters = content_left.find('div.manga_chapter > div.manga_chapter_list > ul > li')
+        const chapters = await content_left.find('div.manga_chapter > div.manga_chapter_list > ul > li')
             .toArray()
             .map(li => {
             const $li = $(li);
@@ -57,7 +62,9 @@ class Crawler {
                 chapter_link: $li.find('div.chapter_number > a').attr('href'),
             };
         });
-        const related_comics = util_1.bodyToComicList(body);
+
+        //const related_comics = util.bodyToComicList(body);
+
         return {
             title,
             thumbnail,
@@ -65,12 +72,12 @@ class Crawler {
             authors,
             categories,
             shortened_content,
-            chapters,
             link,
-            last_updated: chapters[0].time,
-            related_comics,
+            chapters,
+            //last_updated: chapters[0].time,
+            //related_comics,
         };
     }
 }
+
 exports.Crawler = Crawler;
-//# sourceMappingURL=comic_detail.crawler.js.map

@@ -55,9 +55,13 @@ class Controller {
 
         this.crawlerComics = async (req, res) => {
             try {
-                const page = parseInt(req.query.page) || 1;
-                const comics = await index_crawler.Crawler.getComicLink(page);
-                res.status(200).json(comics);
+                //const page = parseInt(req.query.page) || 1;
+                for (let i = 1; i <= 20; i++) {
+                    console.log('------------------------------------------------------------------------')
+                    console.log('Start crawler page:', i)
+                    await index_crawler.Crawler.crawlComics(i);
+                }
+                res.status(200).json("comics");
             }
             catch (e) {
                 util.log(e);
