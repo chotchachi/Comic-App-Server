@@ -4,13 +4,13 @@ const __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 
-const cheerio_1 = __importDefault(require("cheerio"));
-const util_1 = require("../../util");
+const cheerio = __importDefault(require("cheerio"));
+const util = require("../../util");
 
 class Crawler {
     async chapterDetail(link) {
-        const body = await util_1.GET(link);
-        const $ = cheerio_1.default.load(body);
+        const body = await util.GET(link);
+        const $ = cheerio.default.load(body);
         const content_left = $('div.content_left');
         const images = content_left.find('div.list_img > img')
             .toArray()
