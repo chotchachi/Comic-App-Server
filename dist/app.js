@@ -2,14 +2,15 @@
 const __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : {"default": mod};
 };
-
 Object.defineProperty(exports, "__esModule", { value: true });
-const util = require("./util");
-const createError = require('http-errors');
+
 const express = __importDefault(require("express"));
 const path = __importDefault(require("path"));
-const cookieParser = require('cookie-parser');
 const morgan = __importDefault(require("morgan"));
+
+const util = require("./util");
+const createError = require('http-errors');
+const cookieParser = require('cookie-parser');
 const db = require('./db/index');
 const crawler = require('./crawler/crawler')
 
@@ -27,7 +28,6 @@ const app = express.default();
 /**
  * Basic setup
  */
-
 // Connect to MongoDB
 db.connect();
 
@@ -42,8 +42,8 @@ const listener = app.listen(8888, function () {
 app.use(morgan.default('dev'));
 app.use(express.default.json());
 app.use(express.default.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.default.static(path.default.join(__dirname, 'public')));
+app.use(cookieParser());
 
 /**
  * Use routes
@@ -74,4 +74,5 @@ const errorHandler = (err, req, res, next) => {
     res.status(statusCode).json(error);
 };
 app.use(errorHandler);
+
 exports.default = app;

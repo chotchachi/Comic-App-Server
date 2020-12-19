@@ -11,7 +11,7 @@ const chapterModel = require('../models/chapter')
 const comicService = require('../services/comic_service')
 
 async function crawlComics() {
-    for (let i = 1; i <= 20; i++) {
+    for (let i = 1; i <= 100; i++) {
         console.log('------------------------------------------------------------------------')
         console.log('Start crawler page:', i)
         await crawl(i);
