@@ -8,5 +8,6 @@ const router = express.Router();
 router.get('/', comicController.allComic);
 router.get('/detail', comicController.getComicDetail);
 router.get('/chapter', comicController.getChapterDetail);
+router.get('/search', comicController.searchComic);
 
 exports.default = router;

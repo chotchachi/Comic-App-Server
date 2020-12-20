@@ -274,4 +274,9 @@ async function chapterDetail(chapterLink) {
     };
 }
 
-module.exports = { crawlComics, crawlCategories, getPopularComics, getAllComics, chapterDetail };
+async function searchComic(query, page) {
+    const body = await util.GET(`https://ww2.mangafox.online/search/${query}/page/${page}`);
+    return util.bodyToComicList(body);
+}
+
+module.exports = { crawlComics, crawlCategories, getPopularComics, getAllComics, chapterDetail, searchComic };

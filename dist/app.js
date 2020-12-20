@@ -19,7 +19,6 @@ const cors = require('cors');
  * Import routes
  */
 const index = __importDefault(require("./controllers/index"));
-const search_comic = __importDefault(require("./controllers/search_comic"));
 const category = __importDefault(require("./controllers/category"));
 const comic = __importDefault(require("./controllers/comic"));
 const app = express.default();
@@ -53,7 +52,6 @@ app.use(cookieParser());
  */
 app.use('/category', category.default);
 app.use('/comic', comic.default);
-app.use('/search_comic', search_comic.default);
 app.use('/', index.default);
 
 // catch 404 and forward to error handler

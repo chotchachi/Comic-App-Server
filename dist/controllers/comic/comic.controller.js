@@ -56,6 +56,26 @@ class ComicController {
         }
     };
 
+    async searchComic(req, res) {
+        try {
+            const { query } = req.query;
+            if (query === undefined || query === null) {
+                return res
+                    .status(422)
+                    .json(jsonInstance.jsonMessage("Require 'query' to search comic"));
+            }
+            if (typeof query !== 'string') {
+                return res
+                    .status(422)
+                    .json(jsonInstance.jsonMessage("Invalid 'query' to search comic"));
+            }
+            const page = parseInt(req.query.page) || 1;
+            const comics = await comicService.searchComic(query, page);
+            res.status(200).json(comics);
+        } catch (e) {
+            res.status(500).json(jsonInstance.jsonMessage('Internal server error'));
+        }
+    }
 }
 
 module.exports = new ComicController();
