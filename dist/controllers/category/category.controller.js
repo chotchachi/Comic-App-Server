@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", {value: true});
 const categoryService = require("../../services/category_service")
 const jsonInstance = require('../../utils/JsonUtils')
 const util = require('../../util')
+const crawler = require('../../crawler/crawler')
 
 class CategoryController {
     async getAllCategories(req, res) {
@@ -27,7 +28,7 @@ class CategoryController {
                     .status(422)
                     .json(jsonInstance.jsonMessage("Invalid 'category link' to get category popular comics"));
             }
-            const comics = await categoryService.getPopularComics(link);
+            const comics = await crawler.getPopularComics(link);
             res.status(200).json(comics);
         } catch (e) {
             res.status(500).json(jsonInstance.jsonMessage('Internal server error'));
@@ -48,7 +49,7 @@ class CategoryController {
                     .json(jsonInstance.jsonMessage("Invalid 'category link' to get category all comics"));
             }
             const page = parseInt(req.query.page) || 1;
-            const comics = await categoryService.getAllComics(link, page);
+            const comics = await crawler.getAllComics(link, page);
             res.status(200).json(comics);
         } catch (e) {
             res.status(500).json(jsonInstance.jsonMessage('Internal server error'));
