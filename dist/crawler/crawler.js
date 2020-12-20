@@ -175,6 +175,7 @@ async function getFirstImage(categoryLink) {
     return { [categoryLink]: thumbnail };
 }
 
+// Others
 async function getPopularComics(categoryLink) {
     const body = await util.GET(categoryLink);
     const $ = cheerio.default.load(body);
