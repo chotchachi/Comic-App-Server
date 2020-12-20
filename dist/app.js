@@ -13,6 +13,7 @@ const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const db = require('./db/index');
 const crawler = require('./crawler/crawler')
+const cors = require('cors');
 
 /**
  * Import routes
@@ -24,6 +25,9 @@ const search_comic = __importDefault(require("./controllers/search_comic"));
 const category = __importDefault(require("./controllers/category"));
 const category_detail = __importDefault(require("./controllers/category_detail"));
 const app = express.default();
+
+// Disable CORS
+app.use(cors())
 
 /**
  * Basic setup

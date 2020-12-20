@@ -26,6 +26,7 @@
     "@types/morgan": "^1.7.35",
     "@types/node": "^11.9.4",
     "@types/request": "^2.48.1",
+    "cors": "^2.8.5",
     "express-validator": "^6.8.0",
     "mongodb": "^3.6.3",
     "tslint": "^5.12.0",
