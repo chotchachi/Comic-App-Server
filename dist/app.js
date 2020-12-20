@@ -35,7 +35,7 @@ app.use(cors())
 // Connect to MongoDB
 db.connect();
 
-//Config port
+// Config port
 const listener = app.listen(8888, function () {
     console.log('Listening on port ' + listener.address().port);
 });
