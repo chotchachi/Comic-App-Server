@@ -19,7 +19,6 @@ const cors = require('cors');
  * Import routes
  */
 const index = __importDefault(require("./controllers/index"));
-const chapter_detail = __importDefault(require("./controllers/chapter_detail"));
 const search_comic = __importDefault(require("./controllers/search_comic"));
 const category = __importDefault(require("./controllers/category"));
 const comic = __importDefault(require("./controllers/comic"));
@@ -54,7 +53,6 @@ app.use(cookieParser());
  */
 app.use('/category', category.default);
 app.use('/comic', comic.default);
-app.use('/chapter_detail', chapter_detail.default);
 app.use('/search_comic', search_comic.default);
 app.use('/', index.default);
 

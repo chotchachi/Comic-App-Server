@@ -9,9 +9,9 @@ const authorModel = require('../models/author')
 const cateModel = require('../models/categoryOfComic')
 const chapterModel = require('../models/chapter')
 const categoryModel = require('../models/category')
-const categoryDescription = require('../controllers/category/category_descriptions')
 const comicService = require('../services/comic_service')
 const categoryService = require('../services/category_service')
+const categoryDescription = require('../controllers/category/category_descriptions')
 
 // Crawl Comics
 async function crawlComics() {
@@ -233,4 +233,45 @@ async function getAllComics(categoryLink, page) {
         });
 }
 
-module.exports = { crawlComics, crawlCategories, getPopularComics, getAllComics };
+async function chapterDetail(chapterLink) {
+    const body = await util.GET(chapterLink);
+    const $ = cheerio.default.load(body);
+    const content_left = $('div.content_left');
+    const images = content_left.find('div.list_img > img')
+        .toArray()
+        .map(img => $(img).attr('src'));
+    const chapters = content_left.find('div.next_prev_chapter > div.next_prev > select#list_chapters1 > option')
+        .toArray()
+        .map(option => {
+            const $option = $(option);
+            return {
+                chapter_name: $option.text(),
+                chapter_link: $option.attr('value'),
+            };
+        });
+    const currentIndex = chapters.findIndex(chapter => chapter.chapter_link === chapterLink);
+    const prev_chapter_link = (() => {
+        const prev = chapters[currentIndex + 1];
+        return prev ? prev.chapter_link : undefined;
+    })();
+    const next_chapter_link = (() => {
+        const next = chapters[currentIndex - 1];
+        return next ? next.chapter_link : undefined;
+    })();
+    const chapter_name = $('section#breadcrumb_custom li:last-child').text().trim();
+    const chapterNameA = $($('section#breadcrumb_custom li').toArray()[2]).find('a');
+    const comic_name = chapterNameA.attr('title').trim();
+    const comic_link = chapterNameA.attr('href');
+    return {
+        images,
+        prev_chapter_link,
+        next_chapter_link,
+        chapters,
+        chapter_link: chapterLink,
+        chapter_name,
+        comic_name,
+        comic_link,
+    };
+}
+
+module.exports = { crawlComics, crawlCategories, getPopularComics, getAllComics, chapterDetail };
