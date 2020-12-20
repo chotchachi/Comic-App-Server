@@ -31,7 +31,22 @@ class CategoryService {
             .limit(PAGE_SIZE)
             .exec()
             .then(async (comics) => {
-                return comics
+                // using for android client
+                return comics.map(comic => {
+                    return {
+                        title: comic.title,
+                        view: comic.view,
+                        link: comic.link,
+                        thumbnail: comic.thumbnail,
+                        last_chapters: comic.chapters.map(chapter => {
+                            return {
+                                chapter_link: chapter.chapter_link,
+                                chapter_name: chapter.chapter_name,
+                                time: chapter.time
+                            }
+                        })
+                    }
+                })
             })
             .catch((err) => {
                 throw new Error(err.message)
