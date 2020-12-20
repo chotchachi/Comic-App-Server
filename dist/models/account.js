@@ -5,7 +5,8 @@ const Account = new Schema({
     name: { type: String },
     username: { type: String },
     password: { type: String },
-    level: { type: Number, default: 0 }
+    level: { type: Number, default: 0 },
+    token: { type: String }
 }, {
     versionKey: false
 });

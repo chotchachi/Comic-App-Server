@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 
 const { validationResult } = require('express-validator');
-const jwt = require('jsonwebtoken');
-
+const jsonInstance = require('../../utils/JsonUtils')
 const authenService = require('../../services/authen_service')
+const accountService = require('../../services/account_service')
 
 class AccountController {
     async register(req, res) {
@@ -13,11 +13,7 @@ class AccountController {
             res.status(200).json(account);
         }
         catch (e) {
-            const error = {
-                message: 'Register error',
-                status_code: 500
-            };
-            res.status(500).json(error);
+            res.status(500).json(jsonInstance.jsonMessage(e.message));
         }
     }
 
@@ -39,36 +35,26 @@ class AccountController {
 
         if (account.password && account.username) {
             await authenService.login(account.username, account.password)
-                .then((user) => {
-                    const token = jwt.sign(
-                        { userId: user._id },
-                        'RANDOM_TOKEN_SECRET',
-                        { expiresIn: '24h' });
+                .then((token) => {
                     res.status(200).json({
                         token: token
                     });
                 })
                 .catch((err) => {
-                    const error = {
-                        message: 'Internal server error',
-                        status_code: 500
-                    };
-                    res.status(500).json(error);
+                    res.status(401).json(jsonInstance.jsonMessage(err.message));
                 })
-
         } else {
-            const error = {
-                message: 'Internal server error',
-                status_code: 500
-            };
-            res.status(500).json(error);
+           res.status(401).json(jsonInstance.jsonMessage('Username or Password must not empty'))
         }
     }
 
-    async logout(req, res) {
-        let id = req.params.id
+    async isTokenValid(req, res) {
+        return res.status(200).json(jsonInstance.jsonMessage('Token is Validated.'))
+    }
 
-        await authenService.logoutWithId(id)
+    async logout(req, res) {
+        let token = req.params.token
+        await authenService.logoutWithToken(token)
             .then((user) => {
                 responeInstance
                     .success200(res, jsonInstance.toJsonWithData(`LOGOUT SUCCCESS!`, user));
@@ -79,6 +65,18 @@ class AccountController {
             })
     }
 
+    async me(req, res) {
+        const tokenFromClient = req.headers["authorization"]
+        await accountService.getMeInfo(tokenFromClient)
+            .then((account) => {
+                res.status(200).json({
+                    name: account.name
+                })
+            })
+            .catch((err) => {
+                res.status(401).json(jsonInstance.jsonMessage(err.message));
+            })
+    }
 }
 
 module.exports = new AccountController()

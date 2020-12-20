@@ -1,4 +1,5 @@
 const accountModel = require('../models/account');
+const jwt_helper = require('../utils/jwt.helper');
 
 class AuthenService {
     async register(name, username, password) {
@@ -19,35 +20,35 @@ class AuthenService {
             .exec()
             .then(async (account) => {
                 if (account == null) {
-                    throw new Error(`wrong username or password`)
+                    throw new Error('Incorrect username or password!')
                 }
-
-                try {
-                    account.status = true
-                    return await account.save()
-                } catch (err) {
-                    throw new Error(err.message)
-                }
-
+                const token = await jwt_helper.generateToken(account)
+                account.token = token
+                await account.save()
+                return token
             })
             .catch((err) => {
                 throw new Error(err.message)
             })
     }
 
-    async logoutWithId(idUser) {
-        return await accountModel.findByIdAndUpdate(idUser, {status: false}, {new: true})
-            .exec()
-            .then((user) => {
-                if (user == null) {
-                    throw new Error(`wrong mail or password`)
-                }
+    async isTokenValid(token) {
+        return await jwt_helper.verifyToken(token);
+    }
 
-                return user
-            })
-            .catch((err) => {
-                throw new Error(err.message)
-            })
+    async logoutWithToken(idUser) {
+        // return await accountModel.findByIdAndUpdate(idUser, {status: false}, {new: true})
+        //     .exec()
+        //     .then((user) => {
+        //         if (user == null) {
+        //             throw new Error(`wrong mail or password`)
+        //         }
+        //
+        //         return user
+        //     })
+        //     .catch((err) => {
+        //         throw new Error(err.message)
+        //     })
     }
 
 }
