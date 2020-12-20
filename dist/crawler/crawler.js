@@ -8,8 +8,12 @@ const comicModel = require('../models/comic')
 const authorModel = require('../models/author')
 const cateModel = require('../models/categoryOfComic')
 const chapterModel = require('../models/chapter')
+const categoryModel = require('../models/category')
+const categoryDescription = require('../controllers/category/category_descriptions')
 const comicService = require('../services/comic_service')
+const categoryService = require('../services/category_service')
 
+// Crawl Comics
 async function crawlComics() {
     for (let i = 1; i <= 100; i++) {
         console.log('------------------------------------------------------------------------')
@@ -124,4 +128,51 @@ async function comicDetail(link) {
     };
 }
 
-module.exports = { crawlComics };
+// Crawl Category
+async function crawlCategories() {
+    const body = await util.GET('https://ww4.mangafox.online/');
+    const categories = await getCategories(body);
+    const images = await getAndSaveImages(categories.map(c => c.link));
+    return categories.map((c) => {
+        const newCategory = new categoryModel()
+        newCategory.link = c.link
+        newCategory.name = c.name
+        newCategory.thumbnail = images[c.link]
+        newCategory.description = categoryDescription.default[c.link]
+        categoryService.addCategory(newCategory)
+        return newCategory
+    });
+}
+
+async function getCategories(body) {
+    const $ = cheerio.default.load(body);
+    const categories = $('div.content_right > div.danhmuc > table > tbody > tr > td')
+        .toArray()
+        .map(td => {
+            const $td = $(td);
+            return {
+                link: $td.find('a').attr('href'),
+                name: $td.find('a').text().trim(),
+            };
+        });
+    return categories.slice(0, categories.length - 1);
+}
+
+async function getAndSaveImages(links) {
+    let images = {};
+    for (const link of links) {
+        util.log(`[START] fetch thumbnail image ${link}`);
+        const data = await getFirstImage(link);
+        images = Object.assign({}, images, data);
+    }
+    return images;
+}
+
+async function getFirstImage(categoryLink) {
+    const body = await util.GET(categoryLink);
+    const thumbnail = util.bodyToComicList(body)[0].thumbnail;
+    util.log(`[END] fetch thumbnail image ${thumbnail}`);
+    return { [categoryLink]: thumbnail };
+}
+
+module.exports = { crawlComics, crawlCategories };

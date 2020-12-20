@@ -40,8 +40,9 @@ const listener = app.listen(8888, function () {
     console.log('Listening on port ' + listener.address().port);
 });
 
-// Crawl comics
+// Crawl data
 //crawler.crawlComics()
+//crawler.crawlCategories()
 
 app.use(morgan.default('dev'));
 app.use(express.default.json());
@@ -52,12 +53,12 @@ app.use(cookieParser());
 /**
  * Use routes
  */
-app.use('/', index.default);
+app.use('/category', category.default);
+app.use('/category_detail', category_detail.default);
 app.use('/comic_detail', detail.default);
 app.use('/chapter_detail', chapter_detail.default);
 app.use('/search_comic', search_comic.default);
-app.use('/category', category.default);
-app.use('/category_detail', category_detail.default);
+app.use('/', index.default);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

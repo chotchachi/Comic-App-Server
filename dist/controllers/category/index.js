@@ -1,14 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 
-const express_1 = require("express");
-const category_controller_1 = require("./category.controller");
-const category_crawler_1 = require("./category.crawler");
+const express = require("express");
+const categoryController = require("./category.controller");
 
-const crawler = new category_crawler_1.Crawler();
-const controller = new category_controller_1.Controller(crawler);
+const router = express.Router();
+router.get('/', categoryController.getAllCategories);
 
-const router = express_1.Router();
-router.get('/', controller.getAllCategories);
-router.get('/crawler_to_database', controller.saveDatabase)
 exports.default = router;
