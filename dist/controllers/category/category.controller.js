@@ -49,7 +49,7 @@ class CategoryController {
                     .json(jsonInstance.jsonMessage("Invalid 'category link' to get category all comics"));
             }
             const page = parseInt(req.query.page) || 1;
-            const comics = await crawler.getAllComics(link, page);
+            const comics = await categoryService.getAllComics(link, page);
             res.status(200).json(comics);
         } catch (e) {
             res.status(500).json(jsonInstance.jsonMessage('Internal server error'));

@@ -63,7 +63,7 @@ class Crawler {
             };
         });
 
-        //const related_comics = util.bodyToComicList(body);
+        const related_comics = util.bodyToComicList(body);
 
         return {
             title,
@@ -74,8 +74,8 @@ class Crawler {
             shortened_content,
             link,
             chapters,
-            //last_updated: chapters[0].time,
-            //related_comics,
+            last_updated: chapters[0].time,
+            related_comics,
         };
     }
 }

@@ -1,4 +1,5 @@
 const categoryModel = require('../models/category')
+const comicModel = require('../models/comic')
 
 class CategoryService {
     async allCategories() {
@@ -21,6 +22,21 @@ class CategoryService {
         }
     }
 
+    async getAllComics(categoryLink, page) {
+        const PAGE_SIZE = 20;
+        const skip = (page - 1) * PAGE_SIZE;
+        return await comicModel.find({
+            $or: [{'categories': {"$elemMatch": {'link': categoryLink}}}]
+        }).skip(skip)
+            .limit(PAGE_SIZE)
+            .exec()
+            .then(async (comics) => {
+                return comics
+            })
+            .catch((err) => {
+                throw new Error(err.message)
+            })
+    }
 }
 
 module.exports = new CategoryService()
