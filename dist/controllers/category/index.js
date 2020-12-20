@@ -6,5 +6,7 @@ const categoryController = require("./category.controller");
 
 const router = express.Router();
 router.get('/', categoryController.getAllCategories);
+router.get('/popular', categoryController.getPopularComicByCategory);
+router.get('/all', categoryController.getAllComicsByCategory);
 
 exports.default = router;

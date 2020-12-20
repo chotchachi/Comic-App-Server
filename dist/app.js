@@ -23,7 +23,6 @@ const detail = __importDefault(require("./controllers/comic_detail"));
 const chapter_detail = __importDefault(require("./controllers/chapter_detail"));
 const search_comic = __importDefault(require("./controllers/search_comic"));
 const category = __importDefault(require("./controllers/category"));
-const category_detail = __importDefault(require("./controllers/category_detail"));
 const app = express.default();
 
 // Disable CORS
@@ -54,7 +53,6 @@ app.use(cookieParser());
  * Use routes
  */
 app.use('/category', category.default);
-app.use('/category_detail', category_detail.default);
 app.use('/comic_detail', detail.default);
 app.use('/chapter_detail', chapter_detail.default);
 app.use('/search_comic', search_comic.default);
