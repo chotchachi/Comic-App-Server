@@ -18,18 +18,7 @@ class CategoryService {
                 throw new Error(error.message);
             });
     }
-
-    async addCategories(categories) {
-        categories.forEach( (item) => {
-            try {
-                item.save()
-                console.log(item.link, ">>>")
-            } catch (err) {
-                console.log(err, ">>>")
-            }
-        })
-    }
-
+    
     async addCategory(category) {
         try {
             category.save()
