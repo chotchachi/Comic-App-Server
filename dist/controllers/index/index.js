@@ -18,12 +18,12 @@ router.get('/updated_comics', controller.updatedComics)
 router.get('/most_viewed_comics', controller.mostViewedComics)
 
 // Account
-router.post('/register', account_controller.register)
-router.post('/login', account_controller.login)
-router.post('/logout', account_controller.logout)
+router.post('/users/register', account_controller.register)
+router.post('/users/login', account_controller.login)
 //router.use(auth_middleware.isAuth)
-router.get('/users', account_controller.allAccount)
+router.post('/users/logout', account_controller.logout)
+router.get('/users/all', account_controller.allAccount)
 router.get('/users/me', account_controller.me)
-router.get('/login', account_controller.isTokenValid)
-router.delete('/login:token', account_controller.logout)
+router.get('/users/token', account_controller.isTokenValid)
+router.delete('/users/logout:token', account_controller.logout)
 exports.default = router;

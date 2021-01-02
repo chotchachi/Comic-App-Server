@@ -46,13 +46,11 @@ class AccountController {
     async logout(req, res) {
         let token = req.params.token
         await authenService.logoutWithToken(token)
-            .then((user) => {
-                responeInstance
-                    .success200(res, jsonInstance.toJsonWithData(`LOGOUT SUCCCESS!`, user));
+            .then(() => {
+                res.status(200).json(jsonInstance.jsonMessage('Logout successfully!'))
             })
             .catch((err) => {
-                responeInstance
-                    .error400(res, jsonInstance.jsonNoData(err.message));
+                res.status(500).json(jsonInstance.jsonMessage(err.message))
             })
     }
 
@@ -65,7 +63,9 @@ class AccountController {
         await accountService.getMeInfo(tokenFromClient)
             .then((account) => {
                 res.status(200).json({
-                    name: account.name
+                    name: account.name,
+                    username: account.username,
+                    role: account.level
                 })
             })
             .catch((err) => {

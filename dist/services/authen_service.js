@@ -43,18 +43,17 @@ class AuthenService {
     }
 
     async logoutWithToken(idUser) {
-        // return await accountModel.findByIdAndUpdate(idUser, {status: false}, {new: true})
-        //     .exec()
-        //     .then((user) => {
-        //         if (user == null) {
-        //             throw new Error(`wrong mail or password`)
-        //         }
-        //
-        //         return user
-        //     })
-        //     .catch((err) => {
-        //         throw new Error(err.message)
-        //     })
+        return await accountModel.findByIdAndUpdate(idUser, {status: false}, {new: true})
+            .exec()
+            .then((user) => {
+                if (user == null) {
+                    throw new Error(`wrong mail or password`)
+                }
+                return user
+            })
+            .catch((err) => {
+                throw new Error(err.message)
+            })
     }
 
 }
