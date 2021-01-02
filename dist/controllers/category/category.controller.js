@@ -8,7 +8,8 @@ const crawler = require('../../crawler/crawler')
 class CategoryController {
     async getAllCategories(req, res) {
         try {
-            const categories = await categoryService.allCategories();
+            let query = req.query.q
+            const categories = await categoryService.allCategories(query);
             res.status(200).json(categories);
         } catch (e) {
             res.status(500).json(jsonInstance.jsonMessage('Internal server error'));

@@ -2,8 +2,14 @@ const categoryModel = require('../models/category')
 const comicModel = require('../models/comic')
 
 class CategoryService {
-    async allCategories() {
-        return await categoryModel.find()
+    async allCategories(query) {
+        let predicate = {}
+        if (query !== undefined) {
+            predicate = {
+                name: {$regex: ".*" + query + ".*"}
+            }
+        }
+        return await categoryModel.find(predicate)
             .exec()
             .then((categories) => {
                 return categories;
