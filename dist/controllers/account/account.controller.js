@@ -75,7 +75,8 @@ class AccountController {
 
     async allAccount(req, res) {
         try {
-            const accounts = await accountService.getAllUser();
+            const query = req.query.q
+            const accounts = await accountService.getAllUser(query);
             res.status(200).json(accounts);
         } catch (e) {
             res.status(500).json(jsonInstance.jsonMessage('Internal server error'));

@@ -15,18 +15,48 @@ class AccountService {
             })
     }
 
-    async getAllUser() {
-        return await accountModel.find()
-            .exec()
-            .then(async (accounts) => {
-                if (accounts == null) {
-                    throw new Error('Token error!')
-                }
-                return accounts
+    async getAllUser(query) {
+        if (query === undefined || query === null) {
+            return await accountModel.find()
+                .exec()
+                .then(async (accounts) => {
+                    if (accounts == null) {
+                        throw new Error('Token error!')
+                    }
+                    return accounts.map((account) => {
+                        return {
+                            id: account._id,
+                            username: account.username,
+                            name: account.name,
+                            role: account.level
+                        }
+                    })
+                })
+                .catch((err) => {
+                    throw new Error(err.message)
+                })
+        } else {
+            return await accountModel.find({
+                username:  {$regex : ".*"+query+".*"}
             })
-            .catch((err) => {
-                throw new Error(err.message)
-            })
+                .exec()
+                .then(async (accounts) => {
+                    if (accounts == null) {
+                        throw new Error('Token error!')
+                    }
+                    return accounts.map((account) => {
+                        return {
+                            id: account._id,
+                            username: account.username,
+                            name: account.name,
+                            role: account.level
+                        }
+                    })
+                })
+                .catch((err) => {
+                    throw new Error(err.message)
+                })
+        }
     }
 }
 
