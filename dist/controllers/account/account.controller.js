@@ -10,37 +10,33 @@ class AccountController {
     async register(req, res) {
         try {
             const result = await authenService.register(req.body.name, req.body.username, req.body.password)
-            res.status(200).json(result);
+            res.status(200).json(result)
         } catch (e) {
-            res.status(500).json(jsonInstance.jsonMessage(e.message));
+            res.status(500).json(jsonInstance.jsonMessage(e.message))
         }
     }
 
     async login(req, res) {
-        const errors = validationResult(req);
+        const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            const error = {
-                message: 'Internal server error',
-                status_code: 500
-            };
-            res.status(500).json(error);
-            return;
+            res.status(500).json(jsonInstance.jsonMessage('Internal server error'))
+            return
         }
 
         const account = {
             password: req.body.password,
             username: req.body.username
-        };
+        }
 
         if (account.password && account.username) {
             await authenService.login(account.username, account.password)
                 .then((token) => {
                     res.status(200).json({
                         token: token
-                    });
+                    })
                 })
                 .catch((err) => {
-                    res.status(401).json(jsonInstance.jsonMessage(err.message));
+                    res.status(401).json(jsonInstance.jsonMessage(err.message))
                 })
         } else {
            res.status(401).json(jsonInstance.jsonMessage('Username or Password must not empty'))
