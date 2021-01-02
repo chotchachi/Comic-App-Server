@@ -43,10 +43,6 @@ class AccountController {
         }
     }
 
-    async isTokenValid(req, res) {
-        return res.status(200).json(jsonInstance.jsonMessage('Token is Validated.'))
-    }
-
     async logout(req, res) {
         let token = req.params.token
         await authenService.logoutWithToken(token)
@@ -58,6 +54,10 @@ class AccountController {
                 responeInstance
                     .error400(res, jsonInstance.jsonNoData(err.message));
             })
+    }
+
+    async isTokenValid(req, res) {
+        return res.status(200).json(jsonInstance.jsonMessage('Token is Validated.'))
     }
 
     async me(req, res) {
