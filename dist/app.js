@@ -21,6 +21,7 @@ const cors = require('cors');
 const index = __importDefault(require("./controllers/index"));
 const category = __importDefault(require("./controllers/category"));
 const comic = __importDefault(require("./controllers/comic"));
+const account = __importDefault(require("./controllers/account"));
 const app = express.default();
 
 // Disable CORS
@@ -52,6 +53,7 @@ app.use(cookieParser());
  */
 app.use('/category', category.default);
 app.use('/comic', comic.default);
+app.use('/users', account.default);
 app.use('/', index.default);
 
 // catch 404 and forward to error handler
