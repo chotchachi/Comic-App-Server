@@ -1,5 +1,6 @@
-const accountModel = require('../models/account');
-const jwt_helper = require('../utils/jwt.helper');
+const accountModel = require('../models/account')
+const jwt_helper = require('../utils/jwt.helper')
+const jsonHelper = require('../utils/JsonUtils')
 
 class AuthenService {
     async register(name, username, password) {
@@ -7,11 +8,16 @@ class AuthenService {
         newAccount.name = name
         newAccount.username = username
         newAccount.password = password
-        try {
-            await newAccount.save()
-            return newAccount
-        } catch (err) {
-            throw new Error(err.message);
+
+        if (await accountModel.findOne( { username: username })) {
+            return jsonHelper.jsonMessage("Account already exist")
+        } else {
+            try {
+                await newAccount.save()
+                return jsonHelper.jsonMessage("Register successfully")
+            } catch (err) {
+                throw new Error(err.message)
+            }
         }
     }
 
@@ -33,7 +39,7 @@ class AuthenService {
     }
 
     async isTokenValid(token) {
-        return await jwt_helper.verifyToken(token);
+        return await jwt_helper.verifyToken(token)
     }
 
     async logoutWithToken(idUser) {

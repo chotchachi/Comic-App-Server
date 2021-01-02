@@ -15,6 +15,19 @@ class AccountService {
             })
     }
 
+    async getAllUser() {
+        return await accountModel.find()
+            .exec()
+            .then(async (accounts) => {
+                if (accounts == null) {
+                    throw new Error('Token error!')
+                }
+                return accounts
+            })
+            .catch((err) => {
+                throw new Error(err.message)
+            })
+    }
 }
 
 module.exports = new AccountService()

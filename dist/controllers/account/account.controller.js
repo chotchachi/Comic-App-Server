@@ -9,10 +9,9 @@ const accountService = require('../../services/account_service')
 class AccountController {
     async register(req, res) {
         try {
-            const account = await authenService.register(req.body.name, req.body.username, req.body.password)
-            res.status(200).json(account);
-        }
-        catch (e) {
+            const result = await authenService.register(req.body.name, req.body.username, req.body.password)
+            res.status(200).json(result);
+        } catch (e) {
             res.status(500).json(jsonInstance.jsonMessage(e.message));
         }
     }
@@ -76,6 +75,15 @@ class AccountController {
             .catch((err) => {
                 res.status(401).json(jsonInstance.jsonMessage(err.message));
             })
+    }
+
+    async allAccount(req, res) {
+        try {
+            const accounts = await accountService.getAllUser();
+            res.status(200).json(accounts);
+        } catch (e) {
+            res.status(500).json(jsonInstance.jsonMessage('Internal server error'));
+        }
     }
 }
 
