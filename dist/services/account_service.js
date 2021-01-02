@@ -19,7 +19,7 @@ class AccountService {
         let predicate = {}
         if (query !== undefined) {
             predicate = {
-                username: {$regex: ".*" + query + ".*"}
+                username: {$regex: ".*" + query + ".*", $options:'i'}
             }
         }
         return await accountModel.find(predicate)

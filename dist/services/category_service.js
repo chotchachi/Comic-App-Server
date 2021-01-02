@@ -6,7 +6,7 @@ class CategoryService {
         let predicate = {}
         if (query !== undefined) {
             predicate = {
-                name: {$regex: ".*" + query + ".*"}
+                name: {$regex: ".*" + query + ".*", $options:'i'}
             }
         }
         return await categoryModel.find(predicate)

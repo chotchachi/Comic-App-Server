@@ -34,7 +34,7 @@ class ComicService {
         const PAGE_SIZE = 20;
         const skip = (page - 1) * PAGE_SIZE;
         return await comicModel.find({
-            title:  {$regex : ".*"+query+".*"}
+            title:  {$regex : ".*"+query+".*", $options:'i'}
         }).skip(skip)
             .limit(PAGE_SIZE)
             .exec()
