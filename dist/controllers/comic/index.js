@@ -5,9 +5,9 @@ const express = require("express");
 const comicController = require("./comic.controller");
 
 const router = express.Router();
-router.get('/', comicController.allComic);
+router.get('/all', comicController.allComic);
+router.get('/search', comicController.searchComic);
 router.get('/detail', comicController.getComicDetail);
 router.get('/chapter', comicController.getChapterDetail);
-router.get('/search', comicController.searchComic);
 
 exports.default = router;

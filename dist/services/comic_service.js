@@ -10,8 +10,13 @@ class ComicService {
         }
     }
 
-    async getAllComic() {
+    async getAllComic(page) {
+        const PAGE_SIZE = 20;
+        const skip = (page - 1) * PAGE_SIZE;
         return await comicModel.find()
+            .skip(skip)
+            .limit(PAGE_SIZE)
+            .exec()
             .then(async (comics) => {
                 return comics
             })
@@ -22,6 +27,7 @@ class ComicService {
 
     async getComicDetail(comicLink) {
         return await comicModel.findOne( { link: comicLink})
+            .exec()
             .then(async (comic) => {
                 return comic
             })

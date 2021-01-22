@@ -22,9 +22,9 @@ class CategoryService {
     async addCategory(category) {
         try {
             category.save()
-            console.log(category.link, ">>>")
+            console.log("Add new category successfully: ", category.link, ">>>")
         } catch (err) {
-            console.log(err, ">>>")
+            console.log("Add new category failed with error: ", err, ">>>")
         }
     }
 

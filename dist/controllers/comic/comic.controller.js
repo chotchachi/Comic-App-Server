@@ -9,7 +9,8 @@ const crawler = require('../../crawler/crawler')
 class ComicController {
     async allComic(req, res) {
         try {
-            const comics = await comicService.getAllComic();
+            const page = parseInt(req.query.page) || 1;
+            const comics = await comicService.getAllComic(page);
             res.status(200).json(comics);
         } catch (e) {
             res.status(500).json(jsonInstance.jsonMessage('Internal server error'));
